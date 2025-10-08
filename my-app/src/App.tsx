@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [decisionText, setDecisionText] = useState<string>("");
   const [weight, setWeight] = useState<number>(1); // Default weight to 1
   const [team, setTeam] = useState<"product" | "engineering">("product");
-  const [checkBox, setCheckBox] = useState<boolean>(false);
+  const [betterDecision, setBetterDecision] = useState<boolean>(false);
 
   // State for the list of decisions
   const [decisionItems, setDecisionItems] = useState<DecisionItem[]>([]);
@@ -135,7 +135,8 @@ const App: React.FC = () => {
 
     // --- Weighted Random Selection Logic ---
     const totalWeight = decisionItems.reduce(
-      (sum, item) => sum + item.weight,
+      (sum, item) =>
+        sum + (betterDecision && item.team == "product" ? 0 : item.weight),
       0
     );
     let randomNum = Math.random() * totalWeight;
@@ -146,6 +147,7 @@ const App: React.FC = () => {
     let winningStartDegree = 0;
 
     for (const item of decisionItems) {
+      if (betterDecision && item.team == "product") continue;
       const segmentDegrees = (item.weight / totalWeight) * 360;
       winningStartDegree = cumulativeWeight;
       winningEndDegree = cumulativeWeight + segmentDegrees;
@@ -231,7 +233,7 @@ const App: React.FC = () => {
             {/* Weight Input */}
             <div className="input-group">
               <label htmlFor="weight" className="input-label">
-                Weight (1-10)
+                Weight (1-1000)
               </label>
               <input
                 id="weight"
@@ -242,7 +244,7 @@ const App: React.FC = () => {
                 } // Ensure positive number
                 placeholder="1"
                 min="1"
-                max="10"
+                max="1000"
                 className="input-field"
                 aria-label="Weight input field"
                 required
@@ -287,9 +289,9 @@ const App: React.FC = () => {
               id="check"
               type="checkbox"
               onChange={() => {
-                setCheckBox(!checkBox);
+                setBetterDecision(!betterDecision);
               }}
-              checked={checkBox}
+              checked={betterDecision}
             />
             <label htmlFor="check">
               Check this box for better decision making
