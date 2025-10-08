@@ -2,7 +2,9 @@ body {
           margin: 0;
           font-family: 'Inter', sans-serif;
         }
-
+        #root{
+          width: 100%;
+        }
         .app-container {
           min-height: 100vh;
           background-color: #f9fafb; /* gray-50 */
@@ -10,7 +12,7 @@ body {
           align-items: flex-start;
           justify-content: center;
           padding: 1rem; /* p-4 */
-          min-width: 90dvw;
+          max-width: 100%;
         }
       
 
@@ -47,7 +49,7 @@ body {
         }
 
         .input-field {
-          width: 100%;
+          max-width: 100%;
           padding: 1rem; /* p-4 */
           border: 2px solid #a5b4fc; /* border-indigo-200 */
           border-radius: 0.5rem; /* rounded-lg */
@@ -67,6 +69,7 @@ body {
 
         /* Button Styling */
         .submit-button {
+          align-self: center;
           width: 100%;
           background-color: #4f46e5; /* indigo-600 */
           color: #ffffff;
