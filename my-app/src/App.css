@@ -1,10 +1,13 @@
-body {
+        /* Global Reset and Layout */
+        body {
           margin: 0;
           font-family: 'Inter', sans-serif;
         }
+
         #root{
-          width: 100%;
+          min-width: 100%;
         }
+
         .app-container {
           min-height: 100vh;
           background-color: #f9fafb; /* gray-50 */
@@ -14,11 +17,17 @@ body {
           padding: 1rem; /* p-4 */
           max-width: 100%;
         }
-      
+        
+        @media (min-width: 640px) { /* sm: */
+            .app-container {
+                padding: 2rem; /* sm:p-8 */
+            }
+        }
 
         /* Main Card Styling */
         .main-card {
           width: 100%;
+          max-width: 32rem; /* max-w-lg */
           background-color: #ffffff;
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
           border-radius: 1rem; /* rounded-2xl */
@@ -31,7 +40,7 @@ body {
           font-size: 1.875rem; /* 3xl */
           font-weight: 800; /* font-extrabold */
           color: #1f2937; /* gray-800 */
-          margin-bottom: 1.5rem; /* mb-6 */
+          margin-bottom: 0.5rem; 
           text-align: center;
         }
         
@@ -39,22 +48,51 @@ body {
           text-align: center;
           color: #6b7280; /* gray-500 */
           margin-bottom: 2rem; /* mb-8 */
+          font-size: 0.875rem;
         }
 
         /* Form and Input Styling */
         .input-form {
           display: flex;
           flex-direction: column;
-          gap: 1rem; /* space-y-4 */
+          gap: 1rem; 
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.75rem; /* Reduced gap slightly */
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .input-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4b5563; /* gray-600 */
+            margin-bottom: 0.25rem;
         }
 
         .input-field {
-          max-width: 100%;
-          padding: 1rem; /* p-4 */
+          width: 100%;
+          padding: 0.75rem 1rem; /* Adjusted p-3 */
           border: 2px solid #a5b4fc; /* border-indigo-200 */
           border-radius: 0.5rem; /* rounded-lg */
-          font-size: 1.125rem; /* text-lg */
+          font-size: 1rem; /* text-base */
           transition: all 150ms ease-in-out;
+          box-sizing: border-box; /* Important for width calculation */
+        }
+        
+        .select-field {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236366f1'%3E%3Cpath d='M7 7l3 3 3-3m0 6l-3 3-3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem; /* Make space for the arrow */
         }
 
         .input-field::placeholder {
@@ -64,35 +102,142 @@ body {
         .input-field:focus {
           outline: none;
           border-color: #6366f1; /* focus:border-indigo-500 */
-          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3); /* focus:ring-4 focus:ring-indigo-300 */
+          box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3); 
         }
 
-        /* Button Styling */
-        .submit-button {
-          align-self: center;
-          width: 100%;
-          background-color: #4f46e5; /* indigo-600 */
+        /* Button Group Styling */
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Button Base Style */
+        .submit-button, .add-button {
+          flex: 1;
           color: #ffffff;
-          font-weight: 700; /* font-bold */
-          font-size: 1.125rem; /* text-lg */
-          padding: 0.75rem 1.5rem; /* py-3 */
-          border-radius: 0.5rem; /* rounded-lg */
-          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+          font-weight: 700; 
+          font-size: 1rem; 
+          padding: 0.75rem 1rem; 
+          border-radius: 0.5rem; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
           transition: all 150ms ease-in-out;
           border: none;
           cursor: pointer;
         }
+        
+        /* Add Button (Lighter Blue/Green) */
+        .add-button {
+          background-color: #10b981; /* Emerald 500 */
+        }
+        
+        .add-button:hover {
+          background-color: #059669; /* Emerald 600 */
+          transform: scale(1.01); 
+        }
+        
+        /* Decide Button (Main Indigo) */
+        .submit-button {
+          background-color: #4f46e5; /* indigo-600 */
+        }
 
-        .submit-button:hover {
+        .submit-button:hover:not(:disabled) {
           background-color: #4338ca; /* hover:bg-indigo-700 */
-          transform: scale(1.01); /* hover:scale-[1.01] */
+          transform: scale(1.01); 
         }
 
-        .submit-button:active {
-          transform: scale(1); /* active:scale-100 */
+        .submit-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .submit-button:active, .add-button:active {
+          transform: scale(0.99); 
         }
 
-        /* Popup Notification Styling */
+        /* Decision List Styling */
+        .decision-list-container {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb; /* gray-200 */
+        }
+
+        .list-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .empty-message {
+            color: #9ca3af;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+            border: 1px dashed #e5e7eb;
+            border-radius: 0.5rem;
+        }
+        
+        .decision-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .decision-item {
+            display: flex;
+            align-items: center;
+            background-color: #f3f4f6; /* gray-100 */
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .item-index {
+            font-weight: 700;
+            color: #4b5563;
+            margin-right: 0.75rem;
+        }
+
+        .item-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-text {
+            font-weight: 500;
+            color: #1f2937;
+            word-break: break-word;
+        }
+
+        .item-meta {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        .remove-button {
+            margin-left: 0.5rem;
+            background: none;
+            border: none;
+            color: #ef4444; /* red-500 */
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 150ms;
+            padding: 0 0.25rem;
+        }
+
+        .remove-button:hover {
+            color: #dc2626; /* red-600 */
+            transform: scale(1.1);
+        }
+
+
+        /* Popup Notification Styling (Unchanged) */
         .popup-backdrop {
           position: fixed;
           top: 0;
@@ -110,6 +255,7 @@ body {
 
         .popup-box {
           width: 100%;
+          max-width: 24rem; /* max-w-sm */
           padding: 1.5rem; /* p-6 */
           border-radius: 0.75rem; /* rounded-xl */
           font-weight: 700; /* font-bold */
@@ -123,6 +269,48 @@ body {
         .popup-icon {
           font-size: 1.5rem; /* 2xl */
           margin-bottom: 0.5rem; /* mb-2 */
+        }
+
+        .spinner-container {
+            position: relative;
+            width: 20rem; 
+            height: 20rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .spinner-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #f3f4f6;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            /* Transition for the spin is applied inline via generateWheelStyle */
+        }
+        
+        .pointer-icon {
+            position: absolute;
+            top: -1.5rem; /* Position above the wheel */
+            font-size: 2.5rem; 
+            color: #dc2626; /* Red pointer */
+            line-height: 1;
+            z-index: 60;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transform: scaleY(-1); /* Flip the triangle to point down */
+        }
+        
+        .loading-text {
+            position: absolute;
+            bottom: -3rem;
+            color: #ffffff;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .checkBoxContainer{
+          display: flex;
         }
 
         /* Custom Keyframes for a small animation */
